@@ -25,6 +25,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run tests
+      # Step 4: Export environment variables
+      - name: Export environment variables
+        run: |
+          export UIUSER="${{ secrets.UI_USER }}"
+          export UIPWD="${{ secrets.UIPWD }}"
+          # echo "UIUSER=${{ secrets.UIUSER }}" >> $GITHUB_ENV
+          # echo "UIPWD=${{ secrets.UIPWD }}" >> $GITHUB_ENV
+
+      # Step 5: Run tests
       - name: Run TestCafe tests
-        run: npx testcafe chrome ui-part/scr/tests --reporter spec
+        run: npx testcafe chrome:headless ui-part/scr/tests --reporter spec --screenshots on
