@@ -1,5 +1,5 @@
 import { Role } from 'testcafe';
-import { LoginPage } from './pages/loginPage';
+import { LoginPage } from '../scr/pages/loginPage';
 
 const loginPage = new LoginPage();
 

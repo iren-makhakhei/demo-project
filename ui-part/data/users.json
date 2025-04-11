@@ -1,0 +1,67 @@
+[
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "birthdate": "1990-01-01",
+      "email": "john.doe@example.com",
+      "phone": "4359642330",
+      "street1": "10 Downing Street",
+      "street2": "Westminster",
+      "city": "London",
+      "state": "Greater London",
+      "postalCode": "SW1A 2AA",
+      "country": "UK"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "birthdate": "1985-05-15",
+      "email": "jane.smith@example.com",
+      "phone": "5823947561",
+      "street1": "221B Baker Street",
+      "street2": "Marylebone",
+      "city": "London",
+      "state": "Greater London",
+      "postalCode": "NW1 6XE",
+      "country": "UK"
+    },
+    {
+      "firstName": "Alice",
+      "lastName": "Brown",
+      "birthdate": "1992-07-20",
+      "email": "alice.brown@example.com",
+      "phone": "7293846512",
+      "street1": "1 High Street",
+      "street2": "Old Town",
+      "city": "Edinburgh",
+      "state": "Scotland",
+      "postalCode": "EH1 1YZ",
+      "country": "UK"
+    },
+    {
+      "firstName": "Robert",
+      "lastName": "Taylor",
+      "birthdate": "1988-03-10",
+      "email": "robert.taylor@example.com",
+      "phone": "3948571023",
+      "street1": "50 George Square",
+      "street2": "Central",
+      "city": "Glasgow",
+      "state": "Scotland",
+      "postalCode": "G2 1EH",
+      "country": "UK"
+    },
+    {
+      "firstName": "Emily",
+      "lastName": "Wilson",
+      "birthdate": "1995-11-25",
+      "email": "emily.wilson@example.com",
+      "phone": "8473926150",
+      "street1": "15 Market Street",
+      "street2": "City Centre",
+      "city": "Manchester",
+      "state": "Greater Manchester",
+      "postalCode": "M1 1WR",
+      "country": "UK"
+    }
+]
