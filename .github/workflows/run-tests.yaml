@@ -27,4 +27,4 @@ jobs:
 
       # Step 4: Run tests
       - name: Run TestCafe tests
-        run: npx testcafe chrome demo-project/ui-part/scr/tests
+        run: npx testcafe chrome ui-part/scr/tests --reporter spec
