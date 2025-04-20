@@ -3,6 +3,7 @@
     "testcafe": "^3.7.2"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.7.0",
     "dotenv": "^16.5.0",
     "prettier": "^3.5.3"
   }
