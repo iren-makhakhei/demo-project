@@ -1,4 +1,7 @@
-import { faker } from '@faker-js/faker/locale/en_GB';
+//import { faker } from '@faker-js/faker/locale/en_GB';
+
+import { fakerEN_GB as faker } from '@faker-js/faker';
+
 export interface Contact {
   firstName: string;
   lastName: string;
