@@ -1,7 +1,8 @@
 import { ContactsPage } from '../pages/contactsPage';
 import { env } from 'process';
 import { userRole } from '../../data/roles';
-import { generateRandomContact } from '../../data/contactGenerator';
+//import { generateRandomContact } from '../../data/contactGenerator';
+import { generateRandomContact } from '../../data/generateContact';
 
 
 const contacts = new ContactsPage();
