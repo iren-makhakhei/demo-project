@@ -21,8 +21,8 @@ export class ContactsPage {
     logoutButtonSelector: Selector;
 
     constructor() {
-        this.contactListSelector = Selector('.contact-list'); // Replace with actual selector
-        this.addContactButtonSelector = Selector('#add-contact'); // Replace with actual selector
+        this.contactListSelector = Selector('.contactTableBodyRow'); 
+        this.addContactButtonSelector = Selector('#add-contact'); 
         this.firstNameInputSelector = Selector('#firstName');
         this.lastNameInputSelector = Selector('#lastName');
         this.birthdateInputSelector = Selector('#birthdate');
@@ -61,6 +61,64 @@ export class ContactsPage {
                 .typeText(this.countryInputSelector, user.country, { replace: true, paste: true })
                 .click(this.saveButtonSelector);
         }
+    }
+
+    async addContactRandomData(randomContact: any): Promise<void> {
+        await t
+            .click(this.addContactButtonSelector)
+            .typeText(this.firstNameInputSelector, randomContact.firstName)
+            .typeText(this.lastNameInputSelector, randomContact.lastName)
+            .typeText(this.birthdateInputSelector, randomContact.birthdate)
+            .typeText(this.emailInputSelector, randomContact.email)
+            .typeText(this.phoneInputSelector, randomContact.phone)
+            .typeText(this.streetAddress1InputSelector, randomContact.street1)
+            .typeText(this.streetAddress2InputSelector, randomContact.street2)
+            .typeText(this.cityInputSelector, randomContact.city)
+            .typeText(this.stateInputSelector, randomContact.state)
+            .typeText(this.postalCodeInputSelector, randomContact.postalCode)
+            .typeText(this.countryInputSelector, randomContact.country)
+            .click(this.saveButtonSelector);
+    }
+
+    async validateContactPresence(contact: any): Promise<boolean> {
+
+        const rowCount = await this.contactListSelector.count;
+        
+        for (let i = 0; i < rowCount; i++) {
+            const currentRow = this.contactListSelector.nth(i);
+            
+            // Get the values from the table cells
+            const nameCell = await currentRow.find('td').nth(1).innerText;
+            const birthdateCell = await currentRow.find('td').nth(2).innerText;
+            const emailCell = await currentRow.find('td').nth(3).innerText;
+            const phoneCell = await currentRow.find('td').nth(4).innerText;
+            const addressCell = await currentRow.find('td').nth(5).innerText;
+            const cityStatePostalCell = await currentRow.find('td').nth(6).innerText;
+            const countryCell = await currentRow.find('td').nth(7).innerText;
+            
+            // Combine first and last name to match the table format
+            const fullName = `${contact.firstName} ${contact.lastName}`;
+            
+            // Combine address parts to match the table format
+            const fullAddress = `${contact.street1} ${contact.street2}`.trim();
+            const cityStatePostal = `${contact.city} ${contact.state} ${contact.postalCode}`.trim();
+            
+            // Check if all fields match
+            if (
+                nameCell === fullName &&
+                birthdateCell === contact.birthdate &&
+                emailCell === contact.email &&
+                phoneCell === contact.phone &&
+                addressCell === fullAddress &&
+                cityStatePostalCell === cityStatePostal &&
+                countryCell === contact.country
+            ) {
+                return true; // Contact found and validated
+            }
+        }
+        
+        return false; // Contact not found
+
     }
 
      logoutButtonExists(): Promise<boolean> {
