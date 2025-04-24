@@ -63,20 +63,20 @@ export class ContactsPage {
         }
     }
 
-    async addContactRandomData(randoContact: any): Promise<void> {
+    async addContactRandomData(randomContact: any): Promise<void> {
         await t
             .click(this.addContactButtonSelector)
-            .typeText(this.firstNameInputSelector, randoContact.firstName)
-            .typeText(this.lastNameInputSelector, randoContact.lastName)
-            .typeText(this.birthdateInputSelector, randoContact.birthdate)
-            .typeText(this.emailInputSelector, randoContact.email)
-            .typeText(this.phoneInputSelector, randoContact.phone)
-            .typeText(this.streetAddress1InputSelector, randoContact.street1)
-            .typeText(this.streetAddress2InputSelector, randoContact.street2)
-            .typeText(this.cityInputSelector, randoContact.city)
-            .typeText(this.stateInputSelector, randoContact.state)
-            .typeText(this.postalCodeInputSelector, randoContact.postalCode)
-            .typeText(this.countryInputSelector, randoContact.country)
+            .typeText(this.firstNameInputSelector, randomContact.firstName)
+            .typeText(this.lastNameInputSelector, randomContact.lastName)
+            .typeText(this.birthdateInputSelector, randomContact.birthdate)
+            .typeText(this.emailInputSelector, randomContact.email)
+            .typeText(this.phoneInputSelector, randomContact.phone)
+            .typeText(this.streetAddress1InputSelector, randomContact.street1)
+            .typeText(this.streetAddress2InputSelector, randomContact.street2)
+            .typeText(this.cityInputSelector, randomContact.city)
+            .typeText(this.stateInputSelector, randomContact.state)
+            .typeText(this.postalCodeInputSelector, randomContact.postalCode)
+            .typeText(this.countryInputSelector, randomContact.country)
             .click(this.saveButtonSelector);
     }
 
