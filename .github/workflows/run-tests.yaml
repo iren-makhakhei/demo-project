@@ -25,14 +25,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run API Tests
+      # Step 4: Run UI Tests
       - name: Run TestCafe tests
         env:
           UIUSER: ${{ secrets.UI_USER }}
           UIPWD: ${{ secrets.UI_PASS }}
         run: npx testcafe chrome:headless ui-part/scr/tests --reporter spec --screenshots on
 
-      # Step 5: Run UI Tests
+      # Step 5: Run API Tests
       - name: Run API tests
         env:
           UIUSER: ${{ secrets.UI_USER }}
