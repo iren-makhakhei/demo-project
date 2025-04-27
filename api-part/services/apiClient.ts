@@ -18,7 +18,7 @@ export class ApiClient {
     // Add response interceptor for logging and error handling
     this.client.interceptors.response.use(
       (response) => {
-        console.log(`[${response.status}] ${response.config.method?.toUpperCase()} ${response.config.url}`);
+       // console.log(`[${response.status}] ${response.config.method?.toUpperCase()} ${response.config.url}`);
         return response;
       },
       (error) => {

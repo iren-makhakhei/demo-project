@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test:ui": "testcafe chrome ui-part/scr/tests",
-    "test:api": "jest --config=api-part/jest.config.js",
+    "test:api": "jest --config=jest.config.js",
     "test": "npm run test:api && npm run test:ui"
   }
 }

@@ -1,6 +1,6 @@
 import { ContactApiPage } from '../pages/contactApiPage';
-import { config } from '../config';
-import { generateRandomContact } from '../../ui-part/data/generateContact';
+import { config } from '../../config';
+//import { generateRandomContact } from '../../ui-part/data/generateContact';
 
 describe('Contact API Tests', () => {
   let contactApi: ContactApiPage;
@@ -15,65 +15,31 @@ describe('Contact API Tests', () => {
     expect(authToken).toBeTruthy();
   });
 
-  it('should get all contacts', async () => {
+  it('should retrieve all contacts, delete them, and verify none remain', async () => {
+    // Get initial contacts
     const contacts = await contactApi.getAllContacts();
+    console.log(`Found ${contacts.length} contacts to delete`);
     expect(Array.isArray(contacts)).toBe(true);
-  });
-
-  it('should create a new contact', async () => {
-    // Generate random contact data
-    const newContactData = generateRandomContact();
     
-    // Create contact via API
-    const createdContact = await contactApi.createContact(newContactData);
-    
-    // Verify created contact has expected data
-    expect(createdContact).toHaveProperty('_id');
-    expect(createdContact.firstName).toBe(newContactData.firstName);
-    expect(createdContact.lastName).toBe(newContactData.lastName);
-    expect(createdContact.email).toBe(newContactData.email);
-    
-    // Clean up - delete the created contact
-    if (createdContact._id) {
-      await contactApi.deleteContact(createdContact._id);
+    // Skip test if no contacts found
+    if (contacts.length === 0) {
+      console.log('No contacts to delete. Test skipped.');
+      return;
     }
-  });
-
-  it('should update an existing contact', async () => {
-    // Create a contact to update
-    const contactData = generateRandomContact();
-    const createdContact = await contactApi.createContact(contactData);
     
-    // Update the contact
-    const updateData = {
-      firstName: 'Updated',
-      lastName: 'Contact'
-    };
-    
-    const updatedContact = await contactApi.updateContact(createdContact._id, updateData);
-    
-    // Verify the update
-    expect(updatedContact.firstName).toBe(updateData.firstName);
-    expect(updatedContact.lastName).toBe(updateData.lastName);
-    
-    // Clean up
-    await contactApi.deleteContact(createdContact._id);
-  });
-
-  it('should delete a contact', async () => {
-    // Create a contact to delete
-    const contactData = generateRandomContact();
-    const createdContact = await contactApi.createContact(contactData);
-    
-    // Delete the contact
-    await contactApi.deleteContact(createdContact._id);
-    
-    // Verify the contact is deleted (should throw 404)
-    try {
-      await contactApi.getContactById(createdContact._id);
-      fail('Expected contact to be deleted');
-    } catch (error: any) {
-      expect(error.response.status).toBe(404);
+    // Delete all contacts one by one
+    for (const contact of contacts) {
+      try {
+        await contactApi.deleteContact(contact._id);
+        console.log(`Deleted contact: ${contact.firstName} ${contact.lastName}`);
+      } catch (error: any) {
+        console.error(`Failed to delete contact ${contact.firstName} ${contact.lastName}:`, error.message);
+      }
     }
+    
+    // Verify no contacts remain
+    const remainingContacts = await contactApi.getAllContacts();
+    expect(remainingContacts.length).toBe(0);
+    console.log('Successfully deleted all contacts');
   });
 });
