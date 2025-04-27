@@ -18,6 +18,17 @@ fixture('Contact List app tests')
 // });
 
 test('User can populate contact list with random valid data from file', async t => {
+    const filePath = '../../data/users.json';
+    
+    // Add contacts from file
+    await contacts.addContactFromFile(filePath);
+    
+    // Validate that all contacts from the file exist in the list
+    const allContactsPresent = await contacts.validateContactsFromFile(filePath);
+    await t.expect(allContactsPresent).eql(true, 'Not all contacts from the file were found in the list');
+});
+
+test('User can populate contact list with random valid data from file', async t => {
     
     const randomContact = generateRandomContact();
 

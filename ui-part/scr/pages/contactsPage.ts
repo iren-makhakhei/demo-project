@@ -121,6 +121,30 @@ export class ContactsPage {
 
     }
 
+    async validateContactsFromFile(pathAddress: string): Promise<boolean> {
+        try {
+            // Read the users.json file
+            const filePath = path.resolve(__dirname, pathAddress);
+            const fileContent = fs.readFileSync(filePath, 'utf-8');
+            const users = JSON.parse(fileContent);
+            
+            // Verify each contact from the file exists in the contact list
+            for (const expectedContact of users) {
+                const contactExists = await this.validateContactPresence(expectedContact);
+                if (!contactExists) {
+                    console.log(`Contact ${expectedContact.firstName} ${expectedContact.lastName} was not found in the list`);
+                    return false;
+                }
+            }
+            
+            // All contacts were found
+            return true;
+        } catch (error) {
+            console.error('Error validating contacts from file:', error);
+            return false;
+        }
+    }
+
      logoutButtonExists(): Promise<boolean> {
         return this.logoutButtonSelector.exists;
     }

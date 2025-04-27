@@ -5,6 +5,16 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Tests to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - ui
+          - api
 
 jobs:
   test:
@@ -19,15 +29,25 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.10.0' 
+          node-version: '20.10.0'
 
       # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run tests
+      # Step 4: Run UI Tests
       - name: Run TestCafe tests
+        if: github.event.inputs.test_type == 'ui' || github.event.inputs.test_type == 'all' || github.event_name == 'push'
         env:
           UIUSER: ${{ secrets.UI_USER }}
           UIPWD: ${{ secrets.UI_PASS }}
         run: npx testcafe chrome:headless ui-part/scr/tests --reporter spec --screenshots on
+
+      # Step 5: Run API Tests
+      - name: Run API tests
+        if: github.event.inputs.test_type == 'api' || github.event.inputs.test_type == 'all' || github.event_name == 'push'
+        env:
+          UIUSER: ${{ secrets.UI_USER }}
+          UIPWD: ${{ secrets.UI_PASS }}
+          API_BASE_URL: 'https://thinking-tester-contact-list.herokuapp.com'
+        run: npm run test:api
