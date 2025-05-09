@@ -1,20 +1,25 @@
 {
     "compilerOptions": {
-        "target": "ES6",
+        "target": "ES2018",
         "module": "commonjs",
         "strict": true,
         "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
         "outDir": "./dist",
         "baseUrl": ".",
         "paths": {
             "@ui-part/*": ["ui-part/*"]
         },
-        "types": ["cypress", "node", "jest"]
+        "types": ["jest", "cypress", "node" ]
     },
     "include": [
+        "**/*.ts",
         "ui-part/**/*.ts",
         "api-part/**/*.ts",
         "cypress-playground/**/*.ts"
-    ]
+    ],
+    "exclude": [
+    "node_modules"
+  ]
 }
