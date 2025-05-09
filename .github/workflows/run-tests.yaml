@@ -15,6 +15,7 @@ on:
           - all
           - ui
           - api
+          - cypress
 
 jobs:
   test:
@@ -35,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run UI Tests
+      # Step 4: Run Testcafe UI Tests
       - name: Run TestCafe tests
         if: github.event.inputs.test_type == 'ui' || github.event.inputs.test_type == 'all' || github.event_name == 'push'
         env:
@@ -43,7 +44,20 @@ jobs:
           UIPWD: ${{ secrets.UI_PASS }}
         run: npx testcafe chrome:headless ui-part/scr/tests --reporter spec --screenshots on
 
-      # Step 5: Run API Tests
+       # Step 5: Run Cypress Tests
+      - name: Run Cypress tests
+        if: github.event.inputs.test_type == 'cypress' || github.event.inputs.test_type == 'all' || github.event_name == 'push'
+        uses: cypress-io/github-action@v5
+        with:
+          project: ./cypress-playground
+          browser: chrome
+          headed: false
+        env:
+          UIUSER: ${{ secrets.UI_USER }}
+          UIPWD: ${{ secrets.UI_PASS }}
+
+
+      # Step 6: Run API Tests
       - name: Run API tests
         if: github.event.inputs.test_type == 'api' || github.event.inputs.test_type == 'all' || github.event_name == 'push'
         env:
