@@ -1,3 +1,5 @@
 node_modules
 .DS_Store
 api-part/.DS_Store
+cypress-playground/cypress/screenshots/
+cypress-playground/cypress/videos/

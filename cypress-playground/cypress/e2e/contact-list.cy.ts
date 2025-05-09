@@ -7,15 +7,15 @@ describe('Contact List app tests', () => {
     cy.login(Cypress.env('UIUSER'), Cypress.env('UIPWD'));
   });
 
-//   it('User can populate contact list with random valid data from file', () => {
-//     const filePath = path.resolve(__dirname, '../../../ui-part/data/users.json');
+  it('User can populate contact list with random valid data from file', () => {
+    const filePath = path.resolve(__dirname, '../../../ui-part/data/users.json');
     
-//     // Add contacts from file
-//     cy.addContactFromFile(filePath);
+    // Add contacts from file
+    cy.addContactFromFile(filePath);
     
-//     // Validate that all contacts from the file exist in the list
-//     cy.validateContactsFromFile(filePath).should('eq', true);
-//   });
+    // Validate that all contacts from the file exist in the list
+    cy.validateContactsFromFile(filePath).should('eq', true);
+  });
 
   it('User can populate contact list with random valid data from generator', () => {
     const randomContact = generateRandomContact();

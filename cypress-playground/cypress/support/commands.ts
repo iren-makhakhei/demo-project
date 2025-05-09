@@ -29,7 +29,7 @@ Cypress.Commands.add('addContactFromFile', (filePath: string) => {
       cy.get('#postalCode').type(user.postalCode);
       cy.get('#country').type(user.country);
       cy.get('#submit').click();
-      cy.get('#logout').should('exist'); // Verify we're still on the contacts page
+      cy.get('.contactTableHead').should('exist'); // Verify we're still on the contacts page
     }
   });
 });
@@ -53,6 +53,8 @@ Cypress.Commands.add('addContactRandomData', (contact: Contact) => {
 
 // Validate contact presence command
 Cypress.Commands.add('validateContactPresence', (contact: Contact) => {
+  let found = false;
+  
   return cy.get('.contactTableBodyRow').then($rows => {
     for (let i = 0; i < $rows.length; i++) {
       const $row = $rows.eq(i);
@@ -79,28 +81,35 @@ Cypress.Commands.add('validateContactPresence', (contact: Contact) => {
           addressText === fullAddress &&
           cityStateText === cityStatePostal &&
           countryText === contact.country) {
-        return true;
+        found = true;
+        break;
       }
     }
     
-    return false;
+    return cy.wrap(found);
   });
 });
 
 // Validate contacts from file command
 Cypress.Commands.add('validateContactsFromFile', (filePath: string) => {
-  return cy.fixture(filePath).then((users) => {
+  const fullPath = path.resolve(Cypress.config('projectRoot'), '../ui-part/data/users.json');
+  return cy.readFile(fullPath).then((users) => {
+    // Start with assumption all contacts are found
     let allFound = true;
     
-    for (const user of users) {
-      cy.validateContactPresence(user).then(found => {
+    // Create an array of promises to check each contact
+    const promises = users.map((user: Contact) => {
+      return cy.validateContactPresence(user).then(found => {
         if (!found) {
           cy.log(`Contact ${user.firstName} ${user.lastName} was not found in the list`);
           allFound = false;
         }
       });
-    }
+    });
     
-    return allFound;
+    // After all checks complete, return the final result
+    return cy.wrap(Cypress.Promise.all(promises)).then(() => {
+      return cy.wrap(allFound);
+    });
   });
 });
