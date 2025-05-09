@@ -12,11 +12,6 @@ fixture('Contact List app tests')
         await t.useRole(userRole('https://thinking-tester-contact-list.herokuapp.com/', env.UIUSER as string, env.UIPWD as string)); // Use the user role for login
     })
 
-// test('User can populate contact list with random valid data from file', async t => {
-//     await contacts.addContactFromFile('../../data/users.json');
-//     await t.expect(contacts.logoutButtonExists()).ok();
-// });
-
 test('User can populate contact list with random valid data from file', async t => {
     const filePath = '../../data/users.json';
     
