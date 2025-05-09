@@ -5,7 +5,16 @@
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "outDir": "./dist"
+        "outDir": "./dist",
+        "baseUrl": ".",
+        "paths": {
+            "@ui-part/*": ["ui-part/*"]
+        },
+        "types": ["cypress", "node", "jest"]
     },
-    "include": ["ui-part/**/*.ts"]
+    "include": [
+        "ui-part/**/*.ts",
+        "api-part/**/*.ts",
+        "cypress-playground/**/*.ts"
+    ]
 }
