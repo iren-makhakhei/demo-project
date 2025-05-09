@@ -1,6 +1,6 @@
+import { expect, describe, it, beforeAll } from '@jest/globals';
 import { ContactApiPage } from '../pages/contactApiPage';
 import { config } from '../../config';
-//import { generateRandomContact } from '../../ui-part/data/generateContact';
 
 describe('Contact API Tests', () => {
   let contactApi: ContactApiPage;
